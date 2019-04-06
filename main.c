@@ -12,16 +12,16 @@ static int output(int element, int position);
 
 static int waggleDance();
 
-// int input(){
-//     FILE *file = fopen("Integer.txt", "r");
-//     int n = 0, i = 0;
-//     int numbers[10000];
-//     while( fscanf(file, "%d,", &n) > 0 ){
-//         numbers[++i] = n;
-//     }
-//     fclose(file);
-//     return numbers;
-// }
+int input(){
+    FILE *file = fopen("numbersforArray.txt", "r");
+    int n = 0, i = 0;
+    int numbers[10000];
+    while( fscanf(file, "%d,", &n) > 0 ){
+        numbers[++i] = n;
+    }
+    fclose(file);
+    return numbers;
+}
 
 
 
@@ -35,9 +35,7 @@ int getKey(){
 
 
 int waggleDance(){
-    // int *input_array = input();
-    int size = 10;
-    int input_array[size] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    int size = 100;
     int key = getKey();
     int i = globalSearch(key, input_array, size);
     int result = i + localSearch(i*10, (i + 1)*10, input_array, key);
