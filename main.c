@@ -1,8 +1,8 @@
 #include<stdio.h>
 
-// static int input();
+static int input();
 
-static int get_key();
+static int *get_key();
 
 static int globalSearch(int key, int input_array[],int size);
 
@@ -26,9 +26,11 @@ int input(){
 
 
 int getKey(){
-    int key;
+    int key[2];
     printf("Enter the search element\t:");
-    scanf("%d",&key);
+    scanf("%d",&key[0]);
+    printf("Enter the partition size\t:");
+    scanf("%d",&key[1]);
     return key;
 }
 
