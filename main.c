@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-static int input();
+static int *input();
 
 static int *get_key();
 
@@ -11,6 +11,20 @@ static int localSearch(int left_limit, int right_limit, int input_array[], int k
 static int output(int element, int position);
 
 static int waggleDance();
+
+int waggleDance(){
+    //change the size below
+    int size = 10000;
+    int *input_array = input();
+    //key contains both key and partition size for our array
+    int *key = getKey();
+    int i = globalSearch(key, input_array, size);
+    int result = i + localSearch(i*10, (i + 1)*10, input_array, key);
+    output(key, result);
+    return 0;
+}
+
+
 
 int input(){
     FILE *file = fopen("numbersforArray.txt", "r");
@@ -36,18 +50,7 @@ int getKey(){
 
 
 
-int waggleDance(){
-    int size = 100;
-    int key = getKey();
-    int i = globalSearch(key, input_array, size);
-    int result = i + localSearch(i*10, (i + 1)*10, input_array, key);
-    output(key, result);
-    return 0;
-}
-
-
-
-int globalSearch(int key, int input_array[],int size){
+int globalSearch(int key[], int input_array[],int size){
     int partition_size = size / 3, j;
     int checkpoint[partition_size];
     for(int i = 0; i < partition_size - 1; i++){
@@ -56,7 +59,7 @@ int globalSearch(int key, int input_array[],int size){
         j += partition_size / 3;
     }
     for(int i = 0; i < partition_size - 1; i++){
-        if(checkpoint[i]<= key && checkpoint[i + 1] >= key)
+        if(checkpoint[i]<= *(key) && checkpoint[i + 1] >= *(key))
             return i;
     }
 return -1;
