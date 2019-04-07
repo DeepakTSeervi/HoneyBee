@@ -2,7 +2,7 @@
 
 static int *input();
 
-static int *get_key();
+static int *getKey();
 
 static int globalSearch(int key, int input_array[],int size);
 
@@ -19,7 +19,7 @@ int waggleDance(){
     //key contains both key and partition size for our array
     int *key = getKey();
     int i = globalSearch(key, input_array, size);
-    int result = i + localSearch(i*10, (i + 1)*10, input_array, key);
+    int result = i + localSearch(i, (i+1) * *(key+1), input_array, key);
     output(key, result);
     return 0;
 }
@@ -51,16 +51,16 @@ int getKey(){
 
 
 int globalSearch(int key[], int input_array[],int size){
-    int partition_size = size / 3, j;
-    int checkpoint[partition_size];
-    for(int i = 0; i < partition_size - 1; i++){
-        j = 0;
+    int partitions = size / *(key + 1), j;
+    int checkpoint[partitions];
+    j = 0;
+    for(int i = 0; i < partitions; i++){
         checkpoint[i] = input_array[j];
-        j += partition_size / 3;
+        j += size / partitions;
     }
-    for(int i = 0; i < partition_size - 1; i++){
+    for(int i = 0; i < partitions; i++){
         if(checkpoint[i]<= *(key) && checkpoint[i + 1] >= *(key))
-            return i;
+            return i * (size / partitions);
     }
 return -1;
 }
