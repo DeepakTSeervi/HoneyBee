@@ -1,35 +1,33 @@
 #include<stdio.h>
+#include<stdlib.h>
+int globalSearch(int *key, int *input_array,int size);
+int localSearch(int left_limit, int right_limit, int *input_array, int *key);
+int output(int position);
+int waggleDance();
+int *input(int size);
+int *getKey();
 
-static int *input();
-
-static int *getKey();
-
-static int globalSearch(int key, int input_array[],int size);
-
-static int localSearch(int left_limit, int right_limit, int input_array[], int key);
-
-static int output(int element, int position);
-
-static int waggleDance();
 
 int waggleDance(){
     //change the size below
     int size = 10000;
-    int *input_array = input();
+    int *input_array;
+    input_array = input(size);
     //key contains both key and partition size for our array
-    int *key = getKey();
+    int *key;
+    key = getKey();
     int i = globalSearch(key, input_array, size);
-    int result = i + localSearch(i, (i+1) * *(key+1), input_array, key);
-    output(key, result);
+    int result = localSearch(i * *(key+1), (i+1) * *(key+1), input_array, key);
+    output(result);
     return 0;
 }
 
 
 
-int input(){
+int *input(int size){
     FILE *file = fopen("numbersforArray.txt", "r");
     int n = 0, i = 0;
-    int numbers[10000];
+    int *numbers = malloc(sizeof(int)* size);
     while( fscanf(file, "%d,", &n) > 0 ){
         numbers[++i] = n;
     }
@@ -39,8 +37,8 @@ int input(){
 
 
 
-int getKey(){
-    int key[2];
+int *getKey(){
+    int *key = malloc(sizeof(int)*2);
     printf("Enter the search element\t:");
     scanf("%d",&key[0]);
     printf("Enter the partition size\t:");
@@ -50,7 +48,7 @@ int getKey(){
 
 
 
-int globalSearch(int key[], int input_array[],int size){
+int globalSearch(int *key, int *input_array,int size){
     int partitions = size / *(key + 1), j;
     int checkpoint[partitions];
     j = 0;
@@ -60,21 +58,21 @@ int globalSearch(int key[], int input_array[],int size){
     }
     for(int i = 0; i < partitions; i++){
         if(checkpoint[i]<= *(key) && checkpoint[i + 1] >= *(key))
-            return i * (size / partitions);
+            return i;
     }
 return -1;
 }
 
 
 
-int localSearch(int left_limit, int right_limit, int input_array[], int key){
+int localSearch(int left_limit, int right_limit, int *input_array, int *key){
     int beginning = left_limit, end = right_limit, middle;
     while(beginning <= end){
         middle = (beginning + end) / 2;
-        if(input_array[middle] == key){
+        if(input_array[middle] == *key){
             return middle;
         }
-        else if(input_array[middle] > key)
+        else if(input_array[middle] > *key)
             end = middle - 1;
         else
             beginning = middle + 1;
@@ -84,8 +82,8 @@ int localSearch(int left_limit, int right_limit, int input_array[], int key){
 
 
 
-int output(int element, int position){
-    printf("The Element %d is found at the position: %d\n", element, position);
+int output(int position){
+    printf("The Element is found at the position:\t%d\n", position);
     return 0;
 }
 
