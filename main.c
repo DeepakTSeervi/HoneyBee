@@ -1,8 +1,8 @@
+
 /*This Program is a Modified version of Honey Bee Algorithm**
 It has a modified Global search algorithm and Binary search in Local search**
-NOTE: THIS PROGRAM MUST ONLY BE APPLIED TO A DATA STRUCTURE WHICH IS SORTED(ASCENDING ORDER)
+NOTE: THIS PROGRAM MUST ONLY BE APPLIED TO A DATA STRUCTURE WHICH IS SORTED(ASCENDING Order)
 */
-
 #include<stdio.h>
 #include<stdlib.h>
 int globalSearch(int *key, int *input_array,int size);
